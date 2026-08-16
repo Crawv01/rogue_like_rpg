@@ -3,7 +3,15 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
+	public enum FacingDirection
+	{
+		Down,
+		Up,
+		Left,
+		Right,
+	}
 	public const float Speed = 300.0f;
+	public FacingDirection Facing { get; private set; } = FacingDirection.Down;
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -18,6 +26,15 @@ public partial class Player : CharacterBody2D
 		{
 			velocity.X = direction.X * Speed;
 			velocity.Y = direction.Y * Speed;
+
+			if (Mathf.Abs(direction.X) > Mathf.Abs(direction.Y))
+			{
+				Facing = direction.X > 0 ? FacingDirection.Right : FacingDirection.Left;
+			}
+			else
+			{
+				Facing = direction.Y > 0 ? FacingDirection.Down : FacingDirection.Up;
+			}
 		}
 		else
 		{
