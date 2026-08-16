@@ -54,7 +54,8 @@ public partial class Player : CharacterBody2D
 		Velocity = velocity;
 		MoveAndSlide();
 	}
-	private void UpdateSpriteColor()
+	// TEMPORARY: color-codes facing direction until real sprite art exists.
+		private void UpdateSpriteColor()
 	{
 		_sprite.Modulate = Facing switch
 		{
