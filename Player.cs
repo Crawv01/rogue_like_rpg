@@ -13,6 +13,13 @@ public partial class Player : CharacterBody2D
 	public const float Speed = 300.0f;
 	public FacingDirection Facing { get; private set; } = FacingDirection.Down;
 
+	private Sprite2D _sprite;
+
+	public override void _Ready()
+	{
+		_sprite = GetNode<Sprite2D>("Sprite2D");
+	}
+
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector2 velocity = Velocity;
@@ -35,6 +42,8 @@ public partial class Player : CharacterBody2D
 			{
 				Facing = direction.Y > 0 ? FacingDirection.Down : FacingDirection.Up;
 			}
+
+			UpdateSpriteColor();
 		}
 		else
 		{
@@ -44,5 +53,16 @@ public partial class Player : CharacterBody2D
 
 		Velocity = velocity;
 		MoveAndSlide();
+	}
+	private void UpdateSpriteColor()
+	{
+		_sprite.Modulate = Facing switch
+		{
+			FacingDirection.Up => Colors.Blue,
+			FacingDirection.Down => Colors.Green,
+			FacingDirection.Left => Colors.Yellow,
+			FacingDirection.Right => Colors.Red,
+			_ => Colors.White
+		};
 	}
 }
