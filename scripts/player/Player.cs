@@ -13,6 +13,8 @@ public partial class Player : CharacterBody2D
 	public const float Speed = 300.0f;
 	public FacingDirection Facing { get; private set; } = FacingDirection.Down;
 
+	public Vector2 AimDirection { get; private set; } = Vector2.Down;
+
 	private Sprite2D _sprite;
 
 	public override void _Ready()
@@ -44,6 +46,7 @@ public partial class Player : CharacterBody2D
 			}
 
 			UpdateSpriteColor();
+			AimDirection = direction.Normalized();
 		}
 		else
 		{
