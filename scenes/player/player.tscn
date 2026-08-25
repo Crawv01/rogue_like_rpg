@@ -2,10 +2,15 @@
 
 [ext_resource type="Script" uid="uid://bt64jrg7k324i" path="res://scripts/player/Player.cs" id="1_4flbx"]
 [ext_resource type="Texture2D" uid="uid://cxry702bihht3" path="res://icon.svg" id="2_onrkg"]
+[ext_resource type="Script" uid="uid://bw7dwqwqeh535" path="res://scenes/player/PlayerCombat.cs" id="3_gmlin"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1gcmh"]
 radius = 76.0
 height = 400.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lvxji"]
+radius = 75.0
+height = 392.0
 
 [node name="Player" type="CharacterBody2D" unique_id=950106957]
 position = Vector2(576, 324)
@@ -20,3 +25,11 @@ shape = SubResource("CapsuleShape2D_1gcmh")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1270063829]
 position_smoothing_enabled = true
+
+[node name="AttackHitBox" type="Area2D" parent="." unique_id=1020335697]
+monitoring = false
+script = ExtResource("3_gmlin")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitBox" unique_id=957127019]
+position = Vector2(-6, -15)
+shape = SubResource("CapsuleShape2D_lvxji")
