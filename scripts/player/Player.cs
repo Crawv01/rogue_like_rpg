@@ -1,8 +1,12 @@
 using Godot;
 using System;
 
+
 public partial class Player : CharacterBody2D
 {
+
+	public int Health { get; private set; }
+	public int MaxHealth { get; private set; } = 100;
 	public enum FacingDirection
 	{
 		Down,
@@ -10,6 +14,7 @@ public partial class Player : CharacterBody2D
 		Left,
 		Right,
 	}
+	private bool _isDead = false;
 	public const float Speed = 300.0f;
 	public FacingDirection Facing { get; private set; } = FacingDirection.Down;
 
@@ -20,10 +25,17 @@ public partial class Player : CharacterBody2D
 	public override void _Ready()
 	{
 		_sprite = GetNode<Sprite2D>("Sprite2D");
+		Health = MaxHealth;
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
+		//Temperary manuel damage test
+		if (Input.IsActionJustPressed("ui_cancel"))
+		{
+			TakeDamage(10);
+		}
+
 		Vector2 velocity = Velocity;
 
 
@@ -56,6 +68,28 @@ public partial class Player : CharacterBody2D
 
 		Velocity = velocity;
 		MoveAndSlide();
+	}
+
+	public void TakeDamage(int amount)
+	{
+		if (_isDead)
+		{
+			return;
+		}
+		Health -= amount;
+		
+		if (Health <= 0)
+		{
+			Health = 0;
+			_isDead = true;
+			Die();
+		}
+
+	}
+
+	private void Die()
+	{
+		GD.Print("You Died");
 	}
 	// TEMPORARY: color-codes facing direction until real sprite art exists.
 		private void UpdateSpriteColor()
